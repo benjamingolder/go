@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "appId": null,
+  "appDisplayName": "GO",
+  "region": "prod",
+  "appType": "CodeApp",
+  "environmentId": "7dec2aef-2ed0-ec30-bd35-c652eaeda61d",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {}
+}

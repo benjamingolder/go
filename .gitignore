@@ -1,0 +1,35 @@
+# Frontend – Node.js / React / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Frontend – lokale Konfiguration und Secrets
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Backend – Maven / Spring Boot
+backend/target/
+
+# Backend – lokale Konfiguration und Secrets
+backend/.env
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-local.yml
+backend/src/main/resources/application-local.yaml
+
+# Logs und temporäre Dateien
+*.log
+*.tmp
+*.cache
+*.swp
+*.swo
+*.bak
+
+# IDE
+.idea/
+*.iml
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
