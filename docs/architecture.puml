@@ -1,0 +1,40 @@
+@startuml
+
+class auto {
+    - id: String
+    - marke: String
+    - modell: String
+    - sitze: Int
+    - türen: Int
+    - kraftstoff: String
+    - getriebe: String
+    - kennzeichen: String
+    - nutzlast: Float
+    - ladevolumen: Float
+    - status: enum { VERFUEGBAR, VERMIETET, WARTUNG }
+    
+}
+
+class mitarbeiter {
+    - entraID: String
+    - name: String
+    - vorname: String
+    - geburtsdatum: Date
+    - personalnummer: String
+    - abteilung: String
+    - rolle: enum { MITARBEITER, ADMIN }
+}
+
+class reservierung {
+    - id: String
+    - reservierungsnummer: String
+    - startdatum: Date
+    - enddatum: Date
+    - status: enum { PROVISORISCH, BESTAETIGT, ABGESAGT }
+}
+
+mitarbeiter "1" -- "0..*" reservierung
+auto "1" -- "0..*" reservierung
+
+
+@enduml
