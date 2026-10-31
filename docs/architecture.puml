@@ -1,18 +1,17 @@
 @startuml
 
 class auto {
-    - id: String
-    - marke: String
-    - modell: String
-    - sitze: Int
-    - türen: Int
-    - kraftstoff: String
-    - getriebe: String
-    - kennzeichen: String
-    - nutzlast: Float
-    - ladevolumen: Float
+    - id: String (final)
+    - marke: String (final)
+    - modell: String (final)
+    - sitze: int (final)
+    - türen: int (final)
+    - kraftstoff: enum { BENZIN, DIESEL, ELEKTRO, HYBRID } (final)
+    - getriebe: String (final)
+    - kennzeichen: String (final)
+    - nutzlast: double (final)
+    - ladevolumen: double (final)
     - status: enum { VERFUEGBAR, VERMIETET, WARTUNG }
-    
 }
 
 class mitarbeiter {
@@ -30,11 +29,10 @@ class reservierung {
     - reservierungsnummer: String
     - startdatum: Date
     - enddatum: Date
-    - status: enum { PROVISORISCH, BESTAETIGT, ABGESAGT }
+    - status: enum { PROVISORISCH, BESTAETIGT, AKTIV, ABGESCHLOSSEN, ABGESAGT }
 }
 
 mitarbeiter "1" -- "0..*" reservierung
 auto "1" -- "0..*" reservierung
-
 
 @enduml
