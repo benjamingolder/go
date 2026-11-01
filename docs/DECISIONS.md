@@ -33,3 +33,22 @@ abbilden.
 **Begründung:** Ein expliziter Lebenszyklus macht die erlaubten Statuswechsel
 klar definiert und gut testbar – genau darauf liegt der Schwerpunkt der
 Backend-Tests laut README.
+
+## 2026-11-01 – Reservierungszeiträume zeitpunktgenau (LocalDateTime)
+
+**Entscheidung:** `startdatum`/`enddatum` in `Reservierung` werden von `LocalDate`
+auf `LocalDateTime` umgestellt und zu `startzeitpunkt`/`endzeitpunkt` umbenannt.
+
+**Kontext:** Fachlicher Use Case: Mitarbeitende brauchen Fahrzeuge auch nur
+stundenweise (z.B. Kundenbesuch am Morgen). Zum aktuellen Zeitpunkt existiert
+weder Persistenz noch API oder Frontend – die Änderung ist jetzt nahezu kostenlos,
+später wäre sie teuer.
+
+**Alternativen:** Tag-basierte Reservierung mit `LocalDate` (einfacher, aber keine
+halbtägigen Buchungen möglich); `Instant`/`ZonedDateTime` (Zeitzonen-Support –
+Overkill für eine einstandortige Schweizer Firma).
+
+**Begründung:** Die Überschneidungslogik ist strukturell identisch für beide Typen;
+der Mehraufwand liegt nur in Frontend-Eingabe und Tests. Der fachliche Nutzen
+rechtfertigt das. `LocalDateTime` bildet einen Zeitraum als lokale Uhrzeit ohne
+Zeitzonen-Komplexität korrekt ab.
