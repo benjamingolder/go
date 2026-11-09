@@ -1,0 +1,18 @@
+interface ReservierungRepository {
+    + save(reservierung: Reservierung): void
+    + findById(id: String): Reservierung
+    + findByMitarbeiter(mitarbeiter: Mitarbeiter): List<Reservierung>
+    + findByAuto(auto: Auto): List<Reservierung>
+}
+
+interface AutoRepository {
+    + save(auto: Auto): void
+    + findById(id: String): Auto
+    + findAll(): List<Auto>
+    + delete(auto: Auto): void
+}
+
+interface MitarbeiterRepository {
+    + findByEntraId(entraId: String): Mitarbeiter
+    + save(mitarbeiter: Mitarbeiter): void
+}

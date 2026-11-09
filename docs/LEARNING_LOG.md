@@ -54,9 +54,83 @@
 - Kurze erste Zeile (max. 50-72 Zeichen)
 - Details im Body
 
+## 2026-11-09 – Repository-Interfaces in Java
+
+### Was ich gelernt habe
+
+**Interfaces als Vertrag:**
+
+- Ein Interface definiert nur Methodensignaturen, keine Implementierung
+- Methoden sind implizit `public` – Modifier kann man weglassen
+- Die Geschäftslogik hängt nur vom Interface ab, nicht von der Implementierung
+  (Dependency Inversion) → Dataverse-Implementierung später austauschbar
+
+**Default-Package-Falle:**
+
+- Ohne `package`-Deklaration landet eine Klasse im namenlosen Default-Package
+- Klassen in benannten Packages können Default-Package-Klassen nicht importieren
+- Symptom: "Symbol nicht gefunden" für eigentlich existierende Klassen
+
+## 2026-11-09 – Repository-Pattern: Interface vs. Implementierung
+
+### Was ich gelernt habe
+
+**Die Trennung Interface (domain) / Klasse (infrastructure):**
+
+- Das Interface in `domain` ist der **Vertrag** (Steckdose) – nur Signaturen, keine Logik
+- Die Klasse in `infrastructure` ist die **Umsetzung** (Stecker) – enthält die echte
+  Logik (z.B. `HashMap`)
+- `implements` = Versprechen an den Compiler, alle Interface-Methoden zu liefern
+- `@Override` markiert Methoden aus dem Interface → Compiler warnt bei Tippfehlern
+
+**Der Nutzen:**
+
+- Später kommt `DataverseAutoRepository implements AutoRepository` als zweite
+  Implementierung dazu
+- Der Service kennt nur das Interface → beim Wechsel ändert sich im Service
+  **keine Zeile**
+- Abhängigkeiten zeigen nach innen Richtung `domain` (Dependency Inversion)
+
+**Auch intern gegen Interfaces programmieren:**
+
+- `Map<String, Auto> autos = new HashMap<>()` statt `HashMap<...> autos`
+- Gleiches Prinzip, eine Ebene tiefer
+
+## 2026-11-09 – In-Memory-Repositories implementiert
+
+### Was ich gelernt habe
+
+**HashMap als "Datenbank":**
+
+- `HashMap<String, Auto>` – Key ist die ID, Value das Objekt
+- `put(key, value)` = INSERT/UPDATE, `get(key)` = SELECT, `values()` = alle Einträge
+- `findAll()` gibt `new ArrayList<>(map.values())` zurück (defensive Kopie –
+  aussen kann niemand die interne Map verändern)
+
+**Filter-Methoden mit Schleife:**
+
+- Über `map.values()` iterieren, per `if` filtern, Treffer in Ergebnis-Liste sammeln
+- Zugehörigkeit über **ID-Vergleich** prüfen, nicht Objekt-Referenz:
+  `reservierung.getAuto().getId().equals(auto.getId())`
+
+**Method Chaining:**
+
+- `reservierung.getAuto().getId()` – jeder Getter gibt ein Objekt zurück,
+  auf dem der nächste Getter aufgerufen wird
+- `Reservierung` speichert Objekte (`Auto`, `Mitarbeiter`), keine IDs
+
+**Typische Stolpersteine:**
+
+- Methodensignatur muss beim `implements` **exakt** dem Interface entsprechen
+  (Name, Parameter-Typen, Rückgabetyp) – sonst "setzt abstrakte Methode nicht
+  ausser Kraft"
+- Java ist case-sensitiv: `entraId` ≠ `entraID` – "Symbol nicht gefunden"
+  heisst oft: Schreibweise prüfen
+- Methoden, die das Interface nicht deklariert, dürfen kein `@Override` haben
+
 ### Nächste Lernziele
 
-- Repository-Pattern verstehen
-- Geschäftslogik in Services kapseln
+- Geschäftslogik in Services kapseln (`ReservierungService`)
+- Überschneidungsprüfung bei Zeiträumen
 - Unit-Tests mit JUnit schreiben
 - Statuswechsel mit Validierung implementieren

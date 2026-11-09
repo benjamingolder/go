@@ -20,7 +20,10 @@ Firmenfahrzeuge finden, reservieren, übernehmen und zurückgeben.
   - Enums: `AutoStatus`, `Kraftstoff`, `Rolle`, `Reservierungsstatus`
   - Package-Struktur: `ch.golders.backend.domain`
   - Immutability durch `final`-Felder (ausser Status)
-- ⬜ Repository-Interfaces + In-Memory-Implementierung
+- ✅ **Mitarbeiter-Entity verschlankt** (nur `entraID` + `rolle`, Personendaten aus Entra ID)
+- ✅ Repository-Interfaces entworfen (siehe `repositories.puml`)
+- ✅ Repository-Interfaces in Java implementiert (`domain`)
+- ✅ In-Memory-Implementierung der Repositories (`infrastructure`)
 - ⬜ Geschäftslogik (Reservierungsservice)
 - ⬜ REST API
 - ⬜ Dataverse-Anbindung
@@ -29,7 +32,8 @@ Firmenfahrzeuge finden, reservieren, übernehmen und zurückgeben.
 ## Nächste Schritte
 
 1. ✅ **Backend: Domänenmodell** – Java-Klassen für Auto, Mitarbeiter, Reservierung inkl. Enums
-2. **Backend: Repository-Interfaces** – Abstraktion der Persistenz (In-Memory zuerst)
+2. ✅ **Backend: Repository-Interfaces** – Java-Interfaces in `domain` anhand von `repositories.puml`
+3. ✅ **Backend: In-Memory-Repositories** – Implementierung in `infrastructure` (mit `HashMap`)
 3. **Backend: Geschäftslogik** – Reservierungsservice:
    - Prüfung von Reservierungszeiträumen
    - Verhinderung überschneidender Reservierungen

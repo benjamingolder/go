@@ -16,11 +16,6 @@ class auto {
 
 class mitarbeiter {
     - entraID: String
-    - name: String
-    - vorname: String
-    - geburtsdatum: Date
-    - personalnummer: String
-    - abteilung: String
     - rolle: enum { MITARBEITER, ADMIN }
 }
 

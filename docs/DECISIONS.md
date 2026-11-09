@@ -1,5 +1,41 @@
 # Architecture Decision Log
 
+## 2026-11-09 – Verfügbarkeitsprüfung im Service, nicht im Repository
+
+**Entscheidung:** Die Prüfung, ob ein Auto in einem Zeitraum verfügbar ist
+(`checkAvailability`), wird **nicht** Teil des `ReservierungRepository`-Interfaces,
+sondern Geschäftslogik im `ReservierungService` (Package `application`).
+
+**Kontext:** Beim Entwurf der Repository-Interfaces (`repositories.puml`) stand
+`checkAvailability` zunächst im Repository. Repositories sollen aber nur
+Persistenz-Operationen kapseln (laden/speichern), keine Fachlogik.
+
+**Alternativen:** `checkAvailability` im Repository belassen (vermischt Persistenz
+mit Geschäftslogik); dedizierte Query-Methode `findOverlapping(...)` im Repository
+(später bei Dataverse evtl. sinnvoll, vorerst YAGNI).
+
+**Begründung:** Der Service holt sich via `findByAuto(auto)` die Reservierungen
+und prüft Überschneidungen selbst. So bleibt die Regel an einem Ort, ist ohne
+Datenbank testbar und das Repository-Interface bleibt schlank. Bei späterem
+Performance-Bedarf kann eine Query-Methode ergänzt werden, ohne die Regel zu
+duplizieren.
+
+## 2026-11-09 – Mitarbeiter-Entity minimal halten (entraID + rolle)
+
+**Entscheidung:** `Mitarbeiter` enthält nur `entraID` und `rolle`. Personendaten
+(Name, Vorname, Geburtsdatum, Abteilung etc.) werden im Backend nicht gespeichert.
+
+**Kontext:** Die Identitäts- und Personendaten werden bereits in Microsoft Entra ID
+gepflegt. Eine Duplikation im Backend müsste synchronisiert werden und würde
+personenbezogene Daten unnötig an einem weiteren Ort speichern.
+
+**Alternativen:** Vollständiges Mitarbeiter-Profil im Backend (mit Sync-Problem);
+teilweises Profil (nur Anzeigename) – beides verworfen.
+
+**Begründung:** Single Source of Truth (Entra ID), Datenminimierung (DSG),
+weniger Code. Das Backend braucht die Entra ID zur Authentifizierung und die
+Rolle zur Autorisierung – mehr nicht.
+
 ## 2026-10-31 – Package-Struktur: Clean Architecture (leichtgewichtig)
 
 **Entscheidung:** Das Backend wird in vier Packages gegliedert:
