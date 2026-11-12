@@ -128,9 +128,23 @@
   heisst oft: Schreibweise prüfen
 - Methoden, die das Interface nicht deklariert, dürfen kein `@Override` haben
 
+## 2026-11-12 – Service und Überschneidungsprüfung
+
+- `domain` beschreibt Fachmodell und Repository-Verträge; `application`
+  koordiniert Anwendungsfälle; `infrastructure` implementiert technische
+  Zugriffe. Fachregeln können je nach Verantwortung auch im Modell liegen.
+- Ein Service implementiert das Repository nicht selbst: Er erhält ein konkretes
+  Repository-Objekt über seinen Konstruktor und verwendet es über den Interface-Typ.
+  Die Verdrahtung muss noch erfolgen; ein Interface erzeugt kein Objekt.
+- Ein In-Memory-Repository besitzt pro Instanz eine eigene Map. Beim Neustart
+  gehen die darin gespeicherten Daten verloren.
+- Zwei gültige Zeiträume überschneiden sich, wenn jeder vor dem Ende des
+  anderen beginnt. Direkt anschliessende Zeiträume überschneiden sich nicht.
+- Enum-Werte werden als Enum verglichen, nicht als Text.
+
 ### Nächste Lernziele
 
-- Geschäftslogik in Services kapseln (`ReservierungService`)
-- Überschneidungsprüfung bei Zeiträumen
+- Überschneidungsprüfung mit dem Speichern verbinden
+- Gültige Zeiträume und relevante Reservierungsstatus festlegen
 - Unit-Tests mit JUnit schreiben
 - Statuswechsel mit Validierung implementieren

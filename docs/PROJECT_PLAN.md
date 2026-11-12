@@ -9,7 +9,7 @@ Firmenfahrzeuge finden, reservieren, übernehmen und zurückgeben.
 - Architektur: Power Apps Code App → Spring-Boot-API → Microsoft Dataverse
 - Die gesamte Geschäftslogik liegt im Spring-Boot-Backend
 
-## Aktueller Stand (2026-10-31)
+## Aktueller Stand (2026-11-12)
 
 - ✅ Projektstruktur initialisiert (Frontend, Backend, Docs)
 - ✅ Fachmodell definiert: `Auto`, `Mitarbeiter`, `Reservierung` (siehe `architecture.puml`)
@@ -24,27 +24,30 @@ Firmenfahrzeuge finden, reservieren, übernehmen und zurückgeben.
 - ✅ Repository-Interfaces entworfen (siehe `repositories.puml`)
 - ✅ Repository-Interfaces in Java implementiert (`domain`)
 - ✅ In-Memory-Implementierung der Repositories (`infrastructure`)
-- ⬜ Geschäftslogik (Reservierungsservice)
+- ✅ Backend-Starttest zum Laden des Spring-Kontexts vorhanden
+- 🔄 Reservierungsservice begonnen: Repository per Konstruktor, zeitlicher
+  Vergleich und Prüfung gegen vorhandene Reservierungen als private Methoden
+- ⬜ Reservierungen über den Service prüfen und speichern
+- ⬜ Fachliche Unit-Tests für die Geschäftslogik
 - ⬜ REST API
 - ⬜ Dataverse-Anbindung
 - ⬜ Frontend zeigt noch Demo-Inhalt
 
 ## Nächste Schritte
 
-1. ✅ **Backend: Domänenmodell** – Java-Klassen für Auto, Mitarbeiter, Reservierung inkl. Enums
-2. ✅ **Backend: Repository-Interfaces** – Java-Interfaces in `domain` anhand von `repositories.puml`
-3. ✅ **Backend: In-Memory-Repositories** – Implementierung in `infrastructure` (mit `HashMap`)
-3. **Backend: Geschäftslogik** – Reservierungsservice:
-   - Prüfung von Reservierungszeiträumen
-   - Verhinderung überschneidender Reservierungen
+1. **Backend: Geschäftslogik** – Reservierungsservice:
+   - Reservierungszeiträume validieren: Start muss vor Ende liegen
+   - Überschneidungsprüfung mit dem Speichern verbinden
+   - Behandlung abgeschlossener Reservierungen festlegen
+   - Repository und Service für die Anwendung verdrahten
    - Prüfung des Fahrzeugstatus
    - Stornierung, Übernahme, Rückgabe
    - erlaubte/unerlaubte Statuswechsel
-4. **Backend: Unit-Tests** für die Geschäftslogik
-5. **Backend: REST API** + Swagger/OpenAPI
-6. **Dataverse-Anbindung** (Persistenz, OAuth via Entra ID)
-7. **Frontend: Fachliche Seiten** (Fahrzeugliste, Reservierung, etc.)
-8. **Deployment** auf Azure Container Apps
+2. **Backend: Unit-Tests** für die Geschäftslogik
+3. **Backend: REST API** + Swagger/OpenAPI
+4. **Dataverse-Anbindung** (Persistenz, OAuth via Entra ID)
+5. **Frontend: Fachliche Seiten** (Fahrzeugliste, Reservierung, etc.)
+6. **Deployment** auf Azure Container Apps
 
 ## Mögliche Erweiterungen (Backlog)
 

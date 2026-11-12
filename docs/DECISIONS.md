@@ -1,5 +1,33 @@
 # Architecture Decision Log
 
+## 2026-11-12 – Provisorische Reservierungen blockieren Zeiträume
+
+**Entscheidung:** Provisorische Reservierungen blockieren den Zeitraum eines
+Fahrzeugs bereits. Abgesagte Reservierungen blockieren ihn nicht.
+
+**Kontext:** Bei der Überschneidungsprüfung soll der Status bestehender
+Reservierungen berücksichtigt werden.
+
+**Alternative:** Erst bestätigte Reservierungen blockieren den Zeitraum.
+
+**Begründung:** Ein Fahrzeug soll während einer provisorischen Reservierung
+nicht gleichzeitig anderweitig reserviert werden können. Der Umgang mit
+abgeschlossenen Reservierungen ist noch offen; aktuell werden sie mitgeprüft.
+
+## 2026-11-12 – Direkt anschliessende Reservierungen erlauben
+
+**Entscheidung:** Eine Reservierung darf genau dann beginnen, wenn die vorherige
+endet. Die Zeiträume gelten für die Überschneidungsprüfung als halb offen:
+Der Start gehört dazu, das Ende nicht.
+
+**Kontext:** Die Verfügbarkeitsprüfung für Fahrzeuge wird im Reservierungsservice
+entwickelt. Der Umgang mit aneinandergrenzenden Zeiträumen muss eindeutig sein.
+
+**Alternative:** Zwischen Reservierungen eine Pause vorschreiben.
+
+**Begründung:** Fahrzeuge können ohne vorgeschriebene Pause direkt erneut
+reserviert werden. Eine allfällige Vorbereitungszeit ist damit nicht vorgesehen.
+
 ## 2026-11-09 – Verfügbarkeitsprüfung im Service, nicht im Repository
 
 **Entscheidung:** Die Prüfung, ob ein Auto in einem Zeitraum verfügbar ist
